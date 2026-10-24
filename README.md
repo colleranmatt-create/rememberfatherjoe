@@ -26,14 +26,14 @@ Next.js on Vercel, with Supabase for the database and photo storage.
    | `SUPABASE_URL` | from step 1.3 |
    | `SUPABASE_SERVICE_ROLE_KEY` | from step 1.3 |
    | `ADMIN_PASSWORD` | a long password for `/admin` |
-   | `NEXT_PUBLIC_SITE_URL` | `https://remeberfatherjoe.com` (the real domain) |
+   | `NEXT_PUBLIC_SITE_URL` | `https://rememberfatherjoe.com` (the real domain) |
 
 3. Deploy. Every push to `main` redeploys automatically.
 
 ### 3. Domain
 1. In Vercel go to **Project → Settings → Domains**, add the domain, and also add the `www.` version. Vercel offers to redirect one to the other.
 2. Vercel shows the DNS records to create (usually an `A` record for the bare domain and a `CNAME` for `www`). Add them at the registrar (Namecheap: **Domain List → Manage → Advanced DNS**; GoDaddy: **My Products → DNS**).
-3. Recommended: also buy the correct spelling, `rememberfatherjoe.com`, plus `fatherjoemarchese.com` if you want people searching his name to find the site. Add each one as another domain in the same Vercel project and set it to **Redirect to** the main domain. That way people who type "remember" correctly still reach the site.
+3. Optional: add `fatherjoemarchese.com` as another domain in the same project and set it to **Redirect to** the main domain.
 
 ### 4. Content (edit `site.config.ts`)
 Everything marked `TODO` there:
