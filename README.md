@@ -11,7 +11,7 @@ Next.js on Vercel, with Supabase for the database and photo storage.
 
 ### 1. Supabase (database and photos), about 5 minutes
 1. Create a free project at https://supabase.com/dashboard. Pick a region near most visitors.
-2. Open **SQL Editor**, paste the contents of `supabase/migrations/20261024000000_memories.sql` and click **Run**.
+2. Open **SQL Editor** and run each file in `supabase/migrations/` in order (oldest first): paste its contents and click **Run**.
    This creates the `memories` table and the `memory-photos` storage bucket.
 3. Go to **Project Settings → API** (or **API Keys**) and copy:
    - the Project URL, which becomes `SUPABASE_URL`
@@ -71,4 +71,4 @@ npm run dev
 ```
 
 ## Phase 2 ideas
-The data model is already in place for: wall filters by touch point (`relationship`) and decade (`year_from` / `year_to`), AI tags and "memories like this" (add a `pgvector` column), a map from `location`, opt-in contact between people from the same years, and direct video uploads.
+The data model is already in place for: wall filters by touch point (`relationships`) and decade (`year_from` / `year_to`), AI tags and "memories like this" (add a `pgvector` column), a map from `location`, opt-in contact between people from the same years, and direct video uploads.

@@ -8,7 +8,7 @@ export type PublicMemory = {
   id: string;
   created_at: string;
   name: string;
-  relationship: string;
+  relationships: string[];
   relationship_detail: string | null;
   year_from: number | null;
   year_to: number | null;
@@ -21,7 +21,7 @@ export type PublicMemory = {
 export type AdminMemory = PublicMemory & { status: MemoryStatus; email: string | null; photo_paths: string[] };
 
 const PUBLIC_COLUMNS =
-  "id, created_at, name, relationship, relationship_detail, year_from, year_to, location, memory, photo_paths, youtube_url";
+  "id, created_at, name, relationships, relationship_detail, year_from, year_to, location, memory, photo_paths, youtube_url";
 
 type Row = Omit<PublicMemory, "photos"> & { photo_paths: string[] };
 

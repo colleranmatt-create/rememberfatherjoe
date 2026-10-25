@@ -26,7 +26,7 @@ export async function createPhotoUploads(count: number) {
 
 export type SubmitInput = {
   name: string;
-  relationship: string;
+  relationships: string[];
   relationshipDetail: string;
   yearFrom: string;
   yearTo: string;
@@ -51,7 +51,8 @@ export async function submitMemory(input: SubmitInput): Promise<{ ok: true } | {
   if (clean(input.website, 200)) return { ok: true };
 
   const name = clean(input.name, 120);
-  const relationship = clean(input.relationship, 60);
+  const picked = Array.isArray(input.relationships) ? input.relationships : [];
+  const rels = relationships.map((r) => r.value).filter((v) => picked.includes(v));
   const relationshipDetail = clean(input.relationshipDetail, 120);
   const location = clean(input.location, 120);
   const memory = clean(input.memory, 10000);
@@ -62,8 +63,8 @@ export async function submitMemory(input: SubmitInput): Promise<{ ok: true } | {
   const photoPaths = Array.isArray(input.photoPaths) ? input.photoPaths.slice(0, MAX_PHOTOS) : [];
 
   if (!name) return { ok: false, error: "Please add your name." };
-  if (!relationships.some((r) => r.value === relationship))
-    return { ok: false, error: "Please choose how you knew him." };
+  if (!rels.length || picked.length !== rels.length) return { ok: false, error: "Please choose how you knew him." };
+  if (rels.includes("other") && !relationshipDetail) return { ok: false, error: "Please tell us how you knew him." };
   if (memory.length < 2) return { ok: false, error: "Please share a memory." };
   if (Number.isNaN(yearFrom) || Number.isNaN(yearTo)) return { ok: false, error: "Please check the years." };
   if (yearFrom && yearTo && yearTo < yearFrom) return { ok: false, error: "The end year is before the start year." };
@@ -77,7 +78,7 @@ export async function submitMemory(input: SubmitInput): Promise<{ ok: true } | {
 
   const { error } = await db.from("memories").insert({
     name,
-    relationship,
+    relationships: rels,
     relationship_detail: relationshipDetail || null,
     year_from: yearFrom,
     year_to: yearTo,

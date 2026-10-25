@@ -26,7 +26,7 @@ async function toJpeg(file: File): Promise<Blob> {
 
 export default function ShareForm({ college }: { college: string }) {
   const [photos, setPhotos] = useState<Photo[]>([]);
-  const [relationship, setRelationship] = useState("");
+  const [picked, setPicked] = useState<string[]>([]);
   const [status, setStatus] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [done, setDone] = useState(false);
@@ -60,6 +60,10 @@ export default function ShareForm({ college }: { college: string }) {
     setError(null);
     const fd = new FormData(e.currentTarget);
     const field = (k: string) => String(fd.get(k) ?? "");
+    if (!picked.length) {
+      setError("Please choose how you knew him.");
+      return;
+    }
 
     try {
       let photoPaths: string[] = [];
@@ -90,7 +94,7 @@ export default function ShareForm({ college }: { college: string }) {
       setStatus("Saving your memory…");
       const input: SubmitInput = {
         name: field("name"),
-        relationship: field("relationship"),
+        relationships: picked,
         relationshipDetail: field("relationshipDetail"),
         yearFrom: field("yearFrom"),
         yearTo: field("yearTo"),
@@ -128,7 +132,7 @@ export default function ShareForm({ college }: { college: string }) {
               setDone(false);
               photos.forEach((p) => URL.revokeObjectURL(p.preview));
               setPhotos([]);
-              setRelationship("");
+              setPicked([]);
             }}
           >
             Share another
@@ -139,14 +143,16 @@ export default function ShareForm({ college }: { college: string }) {
   }
 
   const busy = status !== null;
-  const detailLabel =
-    relationship === "other"
-      ? "Tell us how"
-      : relationship === "sacrament"
-        ? "Which sacrament?"
-        : relationship === "student" || relationship === "campus-ministry"
-          ? "School or class (optional)"
-          : "Anything to add? (optional)";
+  const has = (v: string) => picked.includes(v);
+  const toggle = (v: string) => setPicked((prev) => (prev.includes(v) ? prev.filter((x) => x !== v) : [...prev, v]));
+  const detailPlaceholder =
+    has("student") || has("campus-ministry")
+      ? `e.g. ${college === "the college" ? "Class of 1998" : `${college}, Class of 1998`}`
+      : has("sacrament")
+        ? "e.g. First Communion, Confirmation"
+        : has("parish")
+          ? "e.g. the parish name"
+          : "";
 
   return (
     <form onSubmit={onSubmit} className="share-form">
@@ -155,35 +161,22 @@ export default function ShareForm({ college }: { college: string }) {
         <input name="name" required maxLength={120} autoComplete="name" />
       </label>
 
-      <label className="field">
-        <span>How did you know him?</span>
-        <select name="relationship" required value={relationship} onChange={(e) => setRelationship(e.target.value)}>
-          <option value="" disabled>
-            Choose one
-          </option>
+      <fieldset className="field">
+        <legend>How did you know him? Choose all that apply.</legend>
+        <div className="choices">
           {relationships.map((r) => (
-            <option key={r.value} value={r.value}>
-              {r.label}
-            </option>
+            <label key={r.value} className="choice">
+              <input type="checkbox" checked={has(r.value)} onChange={() => toggle(r.value)} />
+              <span>{r.label}</span>
+            </label>
           ))}
-        </select>
-      </label>
+        </div>
+      </fieldset>
 
-      {relationship && (
+      {picked.length > 0 && (
         <label className="field">
-          <span>{detailLabel}</span>
-          <input
-            name="relationshipDetail"
-            maxLength={120}
-            required={relationship === "other"}
-            placeholder={
-              relationship === "student" || relationship === "campus-ministry"
-                ? `e.g. ${college === "the college" ? "Class of 1998" : `${college}, Class of 1998`}`
-                : relationship === "sacrament"
-                  ? "e.g. First Communion, Confirmation"
-                  : ""
-            }
-          />
+          <span>{has("other") ? "Tell us how you knew him" : "Anything to add? (optional)"}</span>
+          <input name="relationshipDetail" maxLength={120} required={has("other")} placeholder={detailPlaceholder} />
         </label>
       )}
 
