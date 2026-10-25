@@ -18,7 +18,7 @@ export const site = {
   // TODO: replace with Matt's tribute. Each string is a paragraph.
   tribute: [
     "For generations of students, families and friends, Father Joe was a teacher, a priest and a friend who made people feel known.",
-    "This page gathers the memories, photos and stories of everyone he touched, so we can remember him together and find one another again.",
+    "This page gathers the memories, photos and stories of those he impacted, so we can remember him together.",
   ],
 
   // TODO: fill in the times and places. Remove any entry that doesn't apply.
