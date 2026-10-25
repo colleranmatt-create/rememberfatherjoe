@@ -29,7 +29,7 @@ export default async function Home() {
               <p key={i}>{p}</p>
             ))}
           </div>
-          <Link href="/share" className="button button-large">
+          <Link href="/share" className="button button-large button-gold">
             Share a memory
           </Link>
           {memories.length > 0 && (

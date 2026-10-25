@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { site } from "@/site.config";
+import Link from "next/link";
 import { siteUrl } from "@/lib/site-url";
 import "./globals.css";
 
@@ -21,8 +22,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#faf6ef" },
-    { media: "(prefers-color-scheme: dark)", color: "#1c1916" },
+    { media: "(prefers-color-scheme: light)", color: "#8a100b" },
+    { media: "(prefers-color-scheme: dark)", color: "#8a100b" },
   ],
 };
 
@@ -30,6 +31,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
+        <header className="site-header">
+          <div className="container">
+            <Link href="/" className="site-title">
+              Remember {site.shortName}
+            </Link>
+            <Link href="/share" className="header-link">
+              Share a memory
+            </Link>
+          </div>
+        </header>
         {children}
         <footer className="site-footer">
           <p>In loving memory of {site.name}</p>

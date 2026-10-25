@@ -19,20 +19,20 @@ export default async function Image() {
 
   return new ImageResponse(
     (
-      <div style={{ width: "100%", height: "100%", display: "flex", background: "#faf6ef", color: "#2b2420" }}>
+      <div style={{ width: "100%", height: "100%", display: "flex", background: "#f7f5f1", color: "#231f20" }}>
         {photo ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={photo} alt="" width={504} height={630} style={{ objectFit: "cover", objectPosition: "center 30%" }} />
+          <img src={photo} alt="" width={504} height={630} style={{ objectFit: "cover", objectPosition: "center 30%", borderRight: "12px solid #b29d6c" }} />
         ) : (
-          <div style={{ width: 504, height: 630, display: "flex", alignItems: "center", justifyContent: "center", background: "#7a2e2e", color: "#faf6ef", fontSize: 160 }}>
+          <div style={{ width: 504, height: 630, display: "flex", alignItems: "center", justifyContent: "center", background: "#8a100b", color: "#dccca4", fontSize: 160, borderRight: "12px solid #b29d6c" }}>
             FJ
           </div>
         )}
         <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", padding: "0 64px" }}>
-          <div style={{ fontSize: 28, letterSpacing: 4, textTransform: "uppercase", color: "#7a2e2e" }}>In loving memory</div>
+          <div style={{ fontSize: 28, letterSpacing: 4, textTransform: "uppercase", color: "#7a6538" }}>In loving memory</div>
           <div style={{ fontSize: 76, fontWeight: 700, lineHeight: 1.05, marginTop: 20 }}>{site.name}</div>
-          {site.lifespan && <div style={{ fontSize: 34, marginTop: 12, color: "#6b5f55" }}>{site.lifespan}</div>}
-          <div style={{ fontSize: 34, marginTop: 40, color: "#4a3f38" }}>Share a memory, a photo or a story.</div>
+          {site.lifespan && <div style={{ fontSize: 34, marginTop: 12, color: "#6e6259" }}>{site.lifespan}</div>}
+          <div style={{ fontSize: 34, marginTop: 40, color: "#8a100b" }}>Share a memory, a photo or a story.</div>
         </div>
       </div>
     ),
