@@ -15,7 +15,7 @@ export default async function Home() {
         <div className="container narrow">
           {site.photo ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img className="portrait" src={site.photo} alt={site.photoAlt} width={240} height={240} />
+            <img className="portrait portrait-photo" src={site.photo} alt={site.photoAlt} width={800} height={982} fetchPriority="high" />
           ) : (
             <div className="portrait portrait-placeholder" aria-hidden="true">
               FJ

@@ -9,7 +9,7 @@ export const site = {
 
   // TODO: drop the photo into /public (e.g. public/father-joe.jpg) and set the path here.
   // While this is null the page shows a simple monogram instead.
-  photo: null as string | null,
+  photo: "/father-joe.jpg" as string | null,
   photoAlt: "Father Joe Marchese",
 
   // TODO: replace with the college's name. Used in the tribute and the share form.
