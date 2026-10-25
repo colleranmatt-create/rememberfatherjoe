@@ -35,11 +35,12 @@ export const site = {
   servicesNote: "",
 };
 
-// Options for "How did you know him?" Keep the values stable once memories exist,
+// Options for "What is your connection to Fr. Joe?" Keep the values stable once memories exist,
 // since Phase 2 filters on them. You can rename labels freely.
 export const relationships = [
   { value: "student", label: "Student" },
   { value: "campus-ministry", label: "Campus ministry" },
+  { value: "orientation-leader", label: "Orientation Leader" },
   { value: "retreat", label: "Retreat" },
   { value: "wedding", label: "He married us" },
   { value: "baptism", label: "Baptism" },

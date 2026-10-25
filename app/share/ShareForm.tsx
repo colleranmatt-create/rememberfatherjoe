@@ -61,7 +61,7 @@ export default function ShareForm({ college }: { college: string }) {
     const fd = new FormData(e.currentTarget);
     const field = (k: string) => String(fd.get(k) ?? "");
     if (!picked.length) {
-      setError("Please choose how you knew him.");
+      setError("Please choose your connection to Fr. Joe.");
       return;
     }
 
@@ -162,7 +162,7 @@ export default function ShareForm({ college }: { college: string }) {
       </label>
 
       <fieldset className="field">
-        <legend>How did you know him? Choose all that apply.</legend>
+        <legend>What is your connection to Fr. Joe? Choose all that apply.</legend>
         <div className="choices">
           {relationships.map((r) => (
             <label key={r.value} className="choice">
@@ -175,7 +175,7 @@ export default function ShareForm({ college }: { college: string }) {
 
       {picked.length > 0 && (
         <label className="field">
-          <span>{has("other") ? "Tell us how you knew him" : "Anything to add? (optional)"}</span>
+          <span>{has("other") ? "Tell us your connection to Fr. Joe" : "Anything to add? (optional)"}</span>
           <input name="relationshipDetail" maxLength={120} required={has("other")} placeholder={detailPlaceholder} />
         </label>
       )}

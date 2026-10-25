@@ -63,8 +63,8 @@ export async function submitMemory(input: SubmitInput): Promise<{ ok: true } | {
   const photoPaths = Array.isArray(input.photoPaths) ? input.photoPaths.slice(0, MAX_PHOTOS) : [];
 
   if (!name) return { ok: false, error: "Please add your name." };
-  if (!rels.length || picked.length !== rels.length) return { ok: false, error: "Please choose how you knew him." };
-  if (rels.includes("other") && !relationshipDetail) return { ok: false, error: "Please tell us how you knew him." };
+  if (!rels.length || picked.length !== rels.length) return { ok: false, error: "Please choose your connection to Fr. Joe." };
+  if (rels.includes("other") && !relationshipDetail) return { ok: false, error: "Please tell us your connection to Fr. Joe." };
   if (memory.length < 2) return { ok: false, error: "Please share a memory." };
   if (Number.isNaN(yearFrom) || Number.isNaN(yearTo)) return { ok: false, error: "Please check the years." };
   if (yearFrom && yearTo && yearTo < yearFrom) return { ok: false, error: "The end year is before the start year." };
