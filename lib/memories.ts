@@ -72,6 +72,8 @@ export async function countByStatus(): Promise<Record<MemoryStatus, number>> {
 }
 
 export function formatYears(from: number | null, to: number | null) {
+  // Early memories stored a range; new ones store only the year they first met.
   if (from && to && from !== to) return `${from}–${to}`;
-  return String(from ?? to ?? "");
+  const year = from ?? to;
+  return year ? `First met ${year}` : "";
 }

@@ -152,7 +152,7 @@ export default function ShareForm({ college }: { college: string }) {
         ? "e.g. First Communion, Confirmation"
         : has("parish")
           ? "e.g. the parish name"
-          : "";
+          : "e.g. Class of 1998, a retreat, your parish";
 
   return (
     <form onSubmit={onSubmit} className="share-form">
@@ -173,21 +173,15 @@ export default function ShareForm({ college }: { college: string }) {
         </div>
       </fieldset>
 
-      {picked.length > 0 && (
-        <label className="field">
-          <span>{has("other") ? "Tell us your connection to Fr. Joe" : "Anything to add? (optional)"}</span>
-          <input name="relationshipDetail" maxLength={120} required={has("other")} placeholder={detailPlaceholder} />
-        </label>
-      )}
+      <label className="field">
+        <span>Additional details around your connection (optional)</span>
+        <input name="relationshipDetail" maxLength={120} placeholder={detailPlaceholder} />
+      </label>
 
-      <fieldset className="field years">
-        <legend>Years you knew him (optional)</legend>
-        <div className="row">
-          <input name="yearFrom" inputMode="numeric" pattern="\d{4}" placeholder="From, e.g. 1995" aria-label="From year" />
-          <span aria-hidden="true">–</span>
-          <input name="yearTo" inputMode="numeric" pattern="\d{4}" placeholder="To, e.g. 1999" aria-label="To year" />
-        </div>
-      </fieldset>
+      <label className="field">
+        <span>When did you first meet Fr. Joe? (optional)</span>
+        <input name="yearFrom" inputMode="numeric" pattern="\d{4}" maxLength={4} placeholder="Year, e.g. 1995" />
+      </label>
 
       <label className="field">
         <span>Where do you live now? (optional)</span>
