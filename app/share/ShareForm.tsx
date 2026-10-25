@@ -120,7 +120,7 @@ export default function ShareForm({ college }: { college: string }) {
     return (
       <div className="thanks" role="status">
         <h2>Thank you for sharing.</h2>
-        <p>Your memory has been received. It will appear on the memory wall once it has been reviewed, usually within a day.</p>
+        <p>Your memory is now on the memory wall.</p>
         <div className="thanks-actions">
           <Link href="/#memories" className="button">
             Read memories
@@ -241,7 +241,6 @@ export default function ShareForm({ college }: { college: string }) {
       <button type="submit" className="button button-large" disabled={busy}>
         {status ?? "Share memory"}
       </button>
-      <p className="fine-print">Memories are reviewed before they appear on the site.</p>
     </form>
   );
 }

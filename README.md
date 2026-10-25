@@ -48,12 +48,12 @@ Commit and push; Vercel redeploys in about a minute.
 - Paste the link into a text to yourself to see the preview. To refresh Facebook's cached preview, use https://developers.facebook.com/tools/debug/.
 
 ## Moderating
-Visit `/admin` and sign in with `ADMIN_PASSWORD`.
-- **Waiting:** new submissions. Approve or Hide.
-- **On the wall:** approved memories. Take one down if needed.
-- **Hidden:** rejected memories. Delete forever removes the memory and its photos.
+Memories appear on the wall as soon as they're submitted. To remove one, visit `/admin` and sign in with `ADMIN_PASSWORD`.
+- **On the wall:** everything that's public. **Take down** removes a memory from the site.
+- **Hidden:** removed memories. **Put back on the wall** restores one; **Delete forever** removes the memory and its photos.
+- **Waiting:** only shown if older submissions are still awaiting approval.
 
-Approving a memory refreshes the public page right away. Emails show only on the admin page.
+Emails show only on the admin page.
 
 ## How it's put together
 - `site.config.ts` holds all the words on the site and the "How did you know him?" options

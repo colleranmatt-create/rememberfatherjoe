@@ -10,10 +10,12 @@ import { deleteMemory, logout, setStatus } from "./actions";
 
 export const metadata: Metadata = { title: "Admin", robots: { index: false, follow: false } };
 
+// Memories publish immediately, so "On the wall" is the main tab. "Waiting" only
+// holds posts sent before auto-publishing was switched on, and hides when empty.
 const TABS: { status: MemoryStatus; label: string }[] = [
-  { status: "pending", label: "Waiting" },
   { status: "approved", label: "On the wall" },
   { status: "rejected", label: "Hidden" },
+  { status: "pending", label: "Waiting" },
 ];
 
 export default async function AdminPage({ searchParams }: { searchParams: Promise<{ tab?: string }> }) {
@@ -36,19 +38,20 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
   }
 
   const { tab } = await searchParams;
-  const status = TABS.find((t) => t.status === tab)?.status ?? "pending";
+  const status = TABS.find((t) => t.status === tab)?.status ?? "approved";
   const [memories, counts] = await Promise.all([getMemoriesForAdmin(status), countByStatus()]);
+  const tabs = TABS.filter((t) => t.status !== "pending" || counts.pending > 0 || status === "pending");
 
   return (
     <main className="container admin">
       <div className="admin-header">
-        <h1 className="page-title">Review memories</h1>
+        <h1 className="page-title">Manage memories</h1>
         <form action={logout}>
           <button className="link-button">Sign out</button>
         </form>
       </div>
       <nav className="tabs">
-        {TABS.map((t) => (
+        {tabs.map((t) => (
           <Link key={t.status} href={`/admin?tab=${t.status}`} className={t.status === status ? "active" : ""}>
             {t.label} <span className="count">{counts[t.status]}</span>
           </Link>
@@ -56,7 +59,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
       </nav>
 
       {memories.length === 0 ? (
-        <p className="empty">{status === "pending" ? "Nothing waiting for review." : "Nothing here."}</p>
+        <p className="empty">{status === "approved" ? "No memories have been shared yet." : "Nothing here."}</p>
       ) : (
         <div className="cards">
           {memories.map((m) => (
@@ -74,7 +77,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
                   <form action={setStatus}>
                     <input type="hidden" name="id" value={m.id} />
                     <input type="hidden" name="status" value="approved" />
-                    <button className="button">Approve</button>
+                    <button className="button">{status === "rejected" ? "Put back on the wall" : "Approve"}</button>
                   </form>
                 )}
                 {status !== "rejected" && (

@@ -1,6 +1,7 @@
 "use server";
 
 import { randomUUID } from "node:crypto";
+import { revalidatePath } from "next/cache";
 import { relationships } from "@/site.config";
 import { PHOTO_BUCKET, supabaseAdmin } from "@/lib/supabase";
 import { youtubeId } from "@/lib/youtube";
@@ -86,10 +87,14 @@ export async function submitMemory(input: SubmitInput): Promise<{ ok: true } | {
     photo_paths: photoPaths,
     youtube_url: youtubeUrl || null,
     email: email || null,
+    // Memories go straight onto the wall; /admin can still take one down.
+    status: "approved",
+    approved_at: new Date().toISOString(),
   });
   if (error) {
     console.error("Failed to save memory", error);
     return { ok: false, error: "We couldn't save your memory. Please try again in a moment." };
   }
+  revalidatePath("/");
   return { ok: true };
 }
